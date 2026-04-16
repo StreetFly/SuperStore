@@ -2,11 +2,11 @@
 This project consists of a front end written in React.js, a backend written in C#, and stored procedures in MSSQL
 ## Superstore API
 ### Address
-- **GET** /api/address
-- **GET** /api/address/{id}
-- **POST** /api/address
-- **PUT** /api/address/{id}
-- **DELETE** /api/address/{id}
+- **GET** /api/addresses
+- **GET** /api/addresses/{id}
+- **POST** /api/addresses
+- **PUT** /api/addresses/{id}
+- **DELETE** /api/addresses/{id}
 ### AddressType (Lookup Table)
 - **GET** /api/addresstypes
 ### Category (Lookup Table)
