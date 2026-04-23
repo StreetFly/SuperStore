@@ -10,7 +10,7 @@ GO
 -- Create date: 4/21/2026
 -- Update date: 
 -- Description:	Get all Addresses
--- EXEC GetAllAddresses CustomerID = 1
+-- EXEC GetAllAddresses @CustomerID = 1
 -- =============================================
 CREATE PROCEDURE [dbo].[GetAllAddresses]
 	@CustomerID INT
