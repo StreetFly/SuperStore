@@ -8,15 +8,16 @@ GO
 -- =============================================
 -- Author:		Ryan Michael
 -- Create date: 4/23/2026
--- Update date: 
+-- Update date: 5/5/2026
 -- Description:	Create a Product
--- EXEC CreateProduct @ProductName = 'Samsung GalaxyBook', @CategoryID = '2', @SubCategoryID = '5', @UnitPrice = '596.25'
+-- EXEC CreateProduct @ProductName = 'Samsung GalaxyBook', @CategoryID = '2', @SubCategoryID = '5', @UnitPrice = '596.25', @Quantity = '10'
 -- =============================================
 CREATE PROCEDURE [dbo].[CreateProduct]
 	@ProductName NVARCHAR(150),
 	@CategoryID INT,
 	@SubCategoryID INT,
-	@UnitPrice DECIMAL(18,2)
+	@UnitPrice DECIMAL(18,2),
+	@Quantity INT
 
 AS
 BEGIN
@@ -29,12 +30,14 @@ BEGIN
 		ProductName,
 		CategoryID,
 		SubCategoryID,
-		UnitPrice)
+		UnitPrice,
+		Quantity)
 		VALUES (
 		@ProductName,
 		@CategoryID,
 		@SubCategoryID,
-		@UnitPrice);
+		@UnitPrice,
+		@Quantity);
 	END TRY
 	BEGIN CATCH
 		SELECT ERROR_MESSAGE() AS ErrorMessage;

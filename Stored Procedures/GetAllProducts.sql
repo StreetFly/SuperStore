@@ -20,12 +20,13 @@ BEGIN
 	SET NOCOUNT ON;
 
 	BEGIN TRY
-		SELECT TOP 100 p.ProductID, p.ProductName, c.Category, sc.SubCategory, p.UnitPrice
+		SELECT TOP 100 p.ProductID, p.ProductName, c.Category, sc.SubCategory, p.UnitPrice, p.Quantity
 		FROM dbo.Product AS p
 		JOIN dbo.Category AS c
 		ON p.CategoryID = c.CategoryID
 		JOIN dbo.SubCategory AS sc
 		ON p.SubcategoryID = sc.SubCategoryID
+		WHERE IsActive = 1
 	END TRY
 	BEGIN CATCH
 		SELECT ERROR_MESSAGE() AS ErrorMessage;
