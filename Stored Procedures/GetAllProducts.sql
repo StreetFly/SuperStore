@@ -20,7 +20,12 @@ BEGIN
 	SET NOCOUNT ON;
 
 	BEGIN TRY
-		SELECT TOP 100 p.ProductID, p.ProductName, c.Category, sc.SubCategory, p.UnitPrice, p.Quantity
+		SELECT TOP 100 p.ProductID,
+			p.ProductName,
+			c.Category,
+			sc.SubCategory,
+			p.UnitPrice,
+			p.Quantity
 		FROM dbo.Product AS p
 		JOIN dbo.Category AS c
 		ON p.CategoryID = c.CategoryID
