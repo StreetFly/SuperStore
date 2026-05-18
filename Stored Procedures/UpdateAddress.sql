@@ -32,18 +32,17 @@ BEGIN
 
 	BEGIN TRY
 		UPDATE dbo.Address
-		SET
-		AddressLine1 = @AddressLine1,
-		AddressLine2 = @AddressLine2,
-		City = @City,
-		StateID = @StateID,
-		CountryID = @CountryID,
-		PostalCode = @PostalCode,
-		RegionID = @RegionID,
-		AddressTypeID = @AddressTypeID,
-		CustomerID = @CustomerID,
-		DateUpdated = GETDATE()
-	WHERE AddressID = @AddressID;
+		SET AddressLine1 = COALESCE(@AddressLine1, AddressLine1), 
+			AddressLine2 = COALESCE(@AddressLine2, AddressLine2), 
+			City = COALESCE(@City, City), 
+			StateID = COALESCE(@StateID, StateID), 
+			CountryID = COALESCE(@CountryID, CountryID), 
+			PostalCode = COALESCE(@PostalCode, PostalCode), 
+			RegionID = COALESCE(@RegionID, RegionID), 
+			AddressTypeID = COALESCE(@AddressTypeID, AddressTypeID), 
+			CustomerID = COALESCE(@CustomerID, CustomerID),
+			DateUpdated = GETDATE()
+		WHERE AddressID = @AddressID;
 	END TRY
 	BEGIN CATCH
 		SELECT ERROR_MESSAGE() AS ErrorMessage;

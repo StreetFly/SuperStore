@@ -25,8 +25,11 @@ BEGIN
 
 	BEGIN TRY
 		UPDATE dbo.Customer
-		SET FirstName = @FirstName, LastName = @LastName, SegmentID = @SegmentID, DateUpdated = GETDATE()
-		WHERE CustomerID = @CustomerID
+		SET FirstName = COALESCE(@FirstName, FirstName), 
+			LastName = COALESCE(@LastName, LastName), 
+			SegmentID = COALESCE(@SegmentID, SegmentID),
+			DateUpdated = GETDATE()
+		WHERE CustomerID = @CustomerID;
 	END TRY
 	BEGIN CATCH
 		SELECT ERROR_MESSAGE() AS ErrorMessage;
