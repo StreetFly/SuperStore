@@ -1,8 +1,12 @@
+import { useState } from "react";
+import ProductForm from "./Form";
+
 export default function ProductEdit() {
+    const [initialValues, setInitialValues] = useState(null);
     return (
         <div>
             <h2>Edit Product</h2>
-            <p>Product edit form will be displayed here.</p>
+            <ProductForm initialValues={initialValues} />
         </div>
     );
 }
