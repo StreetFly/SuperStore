@@ -8,14 +8,14 @@ GO
 -- =============================================
 -- Author:		Ryan Michael
 -- Create date: 4/16/2026
--- Update date: 
+-- Update date: 5/19/2026
 -- Description:	Update a Customer
 -- EXEC UpdateCustomer @FirstName = 'Ryan', @LastName = 'Michael', @SegmentID = 2, @CustomerID = 794
 -- =============================================
 CREATE PROCEDURE UpdateCustomer
-	@FirstName NVARCHAR(50),
-	@LastName NVARCHAR(50),
-	@SegmentID INT,
+	@FirstName NVARCHAR(50) = NULL,
+	@LastName NVARCHAR(50) = NULL,
+	@SegmentID INT = NULL,
 	@CustomerID INT
 AS
 BEGIN

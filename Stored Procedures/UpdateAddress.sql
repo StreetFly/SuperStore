@@ -8,21 +8,21 @@ GO
 -- =============================================
 -- Author:		Ryan Michael
 -- Create date: 4/23/2026
--- Update date: 
+-- Update date: 5/19/2026
 -- Description:	Update an Address
 -- EXEC UpdateAddress @AddressID = 794 @AddressLine1 = '2320 South 19th street', @AddressLine2 = '', @City = 'Tacoma', @StateID = '49', @CountryID = '228', @PostalCode = '98405', @RegionID = '4', @AddressTypeID = '1', @CustomerID = '794'
 -- =============================================
 CREATE PROCEDURE [dbo].[UpdateAddress]
-	@AddressID INT,
-	@AddressLine1 NVARCHAR(25),
+	@AddressID INT = NULL,
+	@AddressLine1 NVARCHAR(25) = NULL,
 	@AddressLine2 NVARCHAR(25) = NULL,
-	@City NVARCHAR(50),
-	@StateID INT,
-	@CountryID INT,
-	@PostalCode INT,
-	@RegionID INT,
-	@AddressTypeID INT,
-	@CustomerID INT
+	@City NVARCHAR(50) = NULL,
+	@StateID INT = NULL,
+	@CountryID INT = NULL,
+	@PostalCode INT = NULL,
+	@RegionID INT = NULL,
+	@AddressTypeID INT = NULL,
+	@CustomerID INT = NULL
 
 AS
 BEGIN
