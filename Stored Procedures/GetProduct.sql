@@ -24,7 +24,9 @@ BEGIN
 		SELECT TOP 1 
 			p.ProductID,
 			p.ProductName,
+			p.CategoryID,
 			c.Category,
+			p.SubcategoryID,
 			sc.SubCategory,
 			p.UnitPrice,
 			p.Quantity
@@ -33,6 +35,7 @@ BEGIN
 		ON p.CategoryID = c.CategoryID
 		JOIN dbo.SubCategory AS sc
 		ON p.SubcategoryID = sc.SubCategoryID
+		WHERE p.ProductID = @ProductID AND IsActive = 1
 	END TRY
 	BEGIN CATCH
 		SELECT ERROR_MESSAGE() AS ErrorMessage;

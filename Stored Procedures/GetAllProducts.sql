@@ -22,7 +22,9 @@ BEGIN
 	BEGIN TRY
 		SELECT TOP 100 p.ProductID,
 			p.ProductName,
+			p.CategoryID,
 			c.Category,
+			p.SubcategoryID,
 			sc.SubCategory,
 			p.UnitPrice,
 			p.Quantity
