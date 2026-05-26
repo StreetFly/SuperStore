@@ -11,3 +11,17 @@ export async function read(endpoint) {
 
   return response.json();
 }
+
+export async function del(endpoint) {
+  const response = await fetch(`${BASE_API_URL}/${endpoint}`, {
+    method: 'DELETE',
+  });
+
+  if (!response.ok) {
+    return Promise.reject(
+        new Error(`Failed to delete data from ${endpoint}`)
+    );
+  }
+
+  return response.json();
+}

@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router";
-import { read } from "../../api/fetch-wrapper";
-import { Link } from "react-router";
+import { useParams, useNavigate, Link } from "react-router";
+import { read, del } from "../../api/fetch-wrapper";
+
 
 export default function ProductDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -24,6 +26,32 @@ export default function ProductDetail() {
 
     fetchProduct();
   }, [id]);
+
+    const handleDelete = async (productID) => {
+    const proceed = window.confirm("Are you sure you want to delete this product?"
+    );
+
+    if (!proceed) return;
+
+    const permanent = window.confirm(
+      "Click OK to permanently delete this product."
+    );
+
+    try {
+      setDeleting(true);
+      const res = await del(`products/${productID}?permanent=${permanent}`);
+
+      if (res.ok) {
+        navigate("/products");
+      }
+    }
+    catch (err) {
+      setError(err.message);
+    }
+    finally {
+      setDeleting(false);
+    } 
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -63,12 +91,20 @@ export default function ProductDetail() {
           </tr>
           <tr>
             <td>
-              <strong>Quantity:</strong>
+              <strong>Inventory:</strong>
             </td>
-            <td>{product.quantity}</td>
+            <td>{product.inventory}</td>
           </tr>
         </tbody>
       </table>
+      <div>
+        <Link to={`/products/${product.productID}/edit`}>
+          <button>Edit</button>
+        </Link>
+        <button onClick={() => handleDelete(product.productID)}>
+          {deleting ? "Deleting..." : "Delete"}
+        </button>
+      </div>
     </div>
   );
 }

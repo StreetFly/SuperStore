@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { read } from "../../api/fetch-wrapper";
-import { Link } from "react-router";
+import { read, del } from "../../api/fetch-wrapper";
+import { Link, useNavigate } from "react-router";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -24,7 +26,29 @@ export default function ProductList() {
   }, []);
 
   const handleDelete = async (productID) => {
-    console.log("Deleting product with ID:", productID);
+    const proceed = window.confirm("Are you sure you want to delete this product?"
+    );
+
+    if (!proceed) return;
+
+    const permanent = window.confirm(
+      "Click OK to permanently delete this product."
+    );
+
+    try {
+      setDeleting(true);
+      const res = await del(`products/${productID}?permanent=${permanent}`);
+
+      if (res.ok) {
+        navigate("/products");
+      }
+    }
+    catch (err) {
+      setError(err.message);
+    }
+    finally {
+      setDeleting(false);
+    } 
   };
 
   if (loading) return <div>Loading...</div>;
@@ -66,7 +90,7 @@ export default function ProductList() {
                     <button>Edit</button>
                   </Link>
                   <button onClick={() => handleDelete(product.productID)}>
-                    Delete
+                    {deleting ? "Deleting..." : "Delete"}
                   </button>
                 </td>
               </tr>
