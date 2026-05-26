@@ -8,11 +8,11 @@ GO
 -- =============================================
 -- Author:		Ryan Michael
 -- Create date: 4/21/2026
--- Update date: 
--- Description:	Get all Addresses
--- EXEC GetAllAddresses @CustomerID = 1
+-- Update date: 5/26/2026
+-- Description:	Get all Addresses for customer
+-- EXEC GetCustomerAddresses CustomerID = 1
 -- =============================================
-CREATE PROCEDURE [dbo].[GetAllAddresses]
+CREATE PROCEDURE [dbo].[GetCustomerAddresses]
 	@CustomerID INT
 
 AS

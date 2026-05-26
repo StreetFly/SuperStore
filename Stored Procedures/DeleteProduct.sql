@@ -8,7 +8,7 @@ GO
 -- ============================================
 -- Author:		Ryan Michael
 -- Create date: 4/23/2026
--- Update date: 5/7/2026
+-- Update date: 5/26/2026
 -- Description:	Delete a Product or deacivate
 -- EXEC DeleteProduct @ProductID = 1863
 -- EXEC DeleteProduct @ProductID = 1863, @Delete = 1
@@ -32,7 +32,7 @@ BEGIN
 	ELSE
 		BEGIN
 			UPDATE dbo.Product
-			SET IsActive = 0, Quantity = 0
+			SET IsActive = 0, Inventory = 0
 			WHERE ProductID = @ProductID
 		END
 	END TRY

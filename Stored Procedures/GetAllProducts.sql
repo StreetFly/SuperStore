@@ -8,7 +8,7 @@ GO
 -- =============================================
 -- Author:		Ryan Michael
 -- Create date: 4/23/2026
--- Update date: 
+-- Update date: 5/26/2026
 -- Description:	Get all Products
 -- EXEC GetAllProducts
 -- =============================================
@@ -27,7 +27,7 @@ BEGIN
 			p.SubcategoryID,
 			sc.SubCategory,
 			p.UnitPrice,
-			p.Quantity
+			p.Inventory
 		FROM dbo.Product AS p
 		JOIN dbo.Category AS c
 		ON p.CategoryID = c.CategoryID

@@ -29,7 +29,7 @@ BEGIN
 			p.SubcategoryID,
 			sc.SubCategory,
 			p.UnitPrice,
-			p.Quantity
+			p.Inventory
 		FROM dbo.Product AS p
 		JOIN dbo.Category AS c
 		ON p.CategoryID = c.CategoryID
