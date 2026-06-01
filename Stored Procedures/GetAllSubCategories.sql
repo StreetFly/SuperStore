@@ -20,7 +20,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     BEGIN TRY
-		SELECT SubCategoryID, SubCategory
+		SELECT SubCategoryID,
+		SubCategory
 		FROM dbo.SubCategory;
 	END TRY
 	BEGIN CATCH

@@ -20,7 +20,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     BEGIN TRY
-		SELECT CategoryID, Category
+		SELECT CategoryID,
+		Category
 		FROM dbo.Category;
 	END TRY
 	BEGIN CATCH

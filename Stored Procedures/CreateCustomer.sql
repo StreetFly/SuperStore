@@ -23,8 +23,14 @@ BEGIN
 	SET NOCOUNT ON;
 
 	BEGIN TRY
-		INSERT INTO dbo.Customer (FirstName, LastName, SegmentID)
-		VALUES (@FirstName, @LastName, @SegmentID);
+		INSERT INTO dbo.Customer (
+			FirstName,
+			LastName,
+			SegmentID)
+		VALUES (
+			@FirstName,
+			@LastName,
+			@SegmentID);
 	END TRY
 	BEGIN CATCH
 		SELECT ERROR_MESSAGE() AS ErrorMessage;

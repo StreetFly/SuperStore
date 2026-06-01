@@ -21,7 +21,10 @@ BEGIN
 
 	BEGIN TRY
 	-- Return top 100 active customers with their segment information
-		SELECT TOP 100 c.CustomerID, c.FirstName, c.LastName, s.Segment
+		SELECT TOP 100 c.CustomerID,
+		c.FirstName,
+		c.LastName,
+		s.Segment
 		FROM dbo.Customer AS c
 		JOIN dbo.Segment AS s
 		ON c.SegmentID = s.SegmentID

@@ -22,7 +22,10 @@ BEGIN
 
 	BEGIN TRY
 	-- Return Customer by their ID
-		SELECT TOP 1 c.CustomerID, c.FirstName, c.LastName, s.Segment
+		SELECT TOP 1 c.CustomerID,
+		c.FirstName,
+		c.LastName,
+		s.Segment
 		FROM dbo.Customer AS c
 		JOIN dbo.Segment AS s
 		ON c.SegmentID = s.SegmentID
