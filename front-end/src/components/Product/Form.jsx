@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import {read} from "../../api/fetch-wrapper";
+import {Link} from "react-router";
 
 const emptyForm = {
     productName: '',
@@ -9,7 +10,7 @@ const emptyForm = {
     inventory: ''
 };
 
-export default function ProductForm(initialValues = emptyForm) {
+export default function ProductForm({ initialValues = emptyForm, onSubmit }) {
     const [form, setForm] = useState(initialValues);
     const [errors, setErrors] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,14 +40,54 @@ export default function ProductForm(initialValues = emptyForm) {
         fetchSubCategories();
     }, []);
 
+    const handleChange = event => {
+        const {name, value} = event.target;
+        setForm(prevForm => ({
+            ...prevForm,
+            [name]: value
+        }));
+    }
+
+    const handleSubmit = async event => {
+        event.preventDefault();
+
+        setErrors(null);
+        setIsSubmitting(true);
+
+        try {
+            await onSubmit({
+                productName: form.productName,
+                categoryID: parseInt(form.categoryID),
+                subCategoryID: parseInt(form.subCategoryID),
+                unitPrice: parseFloat(form.unitPrice),
+                inventory: parseInt(form.inventory)
+            });
+        } catch (error) {
+            setErrors(error.message);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             {errors && <p style={{color: "red"}}>{errors}</p>}
+            <div>
+                <label for="productName">Product Name:</label>
+                <input
+                type="text"
+                name="productName"
+                value={form.productName}
+                onChange={handleChange}
+                required
+                />
+            </div>
             <div>
                 <label for="categoryID">Category:</label>
                 <select
                 name="categoryID"
                 value={form.categoryID}
+                onChange={handleChange}
                 required
                 >
                     <option value="">Select a category</option>
@@ -54,6 +95,7 @@ export default function ProductForm(initialValues = emptyForm) {
                         <option key={category.categoryID} value={category.categoryID}>
                             {category.categoryName}
                         </option>
+                        
                     ))}
                 </select>
             </div>
@@ -63,6 +105,7 @@ export default function ProductForm(initialValues = emptyForm) {
                 <select
                 name="subCategoryID"
                 value={form.subCategoryID}
+                onChange={handleChange}
                 required
                 >
                     <option value="">Select a subcategory</option>
@@ -73,6 +116,36 @@ export default function ProductForm(initialValues = emptyForm) {
                     ))}
                 </select>
             </div>
+            <div>
+                <label for="unitPrice">Unit Price:</label>
+                <input
+                type="number"
+                name="unitPrice"
+                min="0"
+                step="0.01"
+                value={form.unitPrice}
+                onChange={handleChange}
+                required
+                />
+            </div>
+            <div>
+                <label for="inventory">Inventory:</label>
+                <input
+                type="number"
+                name="inventory"
+                min="0"
+                value={form.inventory}
+                onChange={handleChange}
+                required
+                />
+            </div>
+
+            <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Submitting..." : "Submit"}
+            </button>
+            <Link to={`/products`}>
+                <button>Cancel</button>
+            </Link>
         </form>
     )
 }
