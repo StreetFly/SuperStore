@@ -68,8 +68,15 @@ public class ProductsController : ControllerBase
                 new SqlParameter("@Inventory", SqlDbType.Int) { Value = product.Inventory }
             };
 
-            int newProductID = await _db.ExecuteAsync("CreateProduct", parameters);
-            return Created();
+            var row = await _db.QuerySingleAsync("CreateProduct", parameters);
+
+            if (row == null)
+            {
+                return StatusCode(500, "An error occurred while creating the product.");
+            }
+
+            Product createdProduct = MapToProduct(row);
+            return CreatedAtRoute("GetProductById", new { id = createdProduct.ProductID }, createdProduct);
         }
         catch
         {
