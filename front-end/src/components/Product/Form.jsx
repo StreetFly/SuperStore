@@ -48,15 +48,45 @@ export default function ProductForm({ initialValues = emptyForm, onSubmit }) {
         }));
     }
 
+    const validateProductName = (name) => {
+        if (!name || !name.trim()) {
+            return "Product name is required.";
+        }
+
+        name = name.trim();
+
+        if (name.length < 3) {
+            return "Product name must be at least 3 characters.";
+        }
+
+        if (name.length > 150) { 
+            return "Product name cannot exceed 150 characters.";
+        }
+
+        const validPattern = /^[A-Za-z0-9\s\-()'&]+$/;
+        if (!validPattern.test(name)) {
+            return "Product name contains invalid characters.";
+        }
+
+        return null;
+    };
+
+
     const handleSubmit = async event => {
         event.preventDefault();
-
         setErrors(null);
+
+        const nameError = validateProductName(form.productName);
+        if (nameError) {
+            setErrors(nameError);
+            return;
+        }
+
         setIsSubmitting(true);
 
         try {
             await onSubmit({
-                productName: form.productName,
+                productName: form.productName.trim(),
                 categoryID: parseInt(form.categoryID),
                 subCategoryID: parseInt(form.subCategoryID),
                 unitPrice: parseFloat(form.unitPrice),
@@ -68,6 +98,7 @@ export default function ProductForm({ initialValues = emptyForm, onSubmit }) {
             setIsSubmitting(false);
         }
     };
+
 
     return (
         <form onSubmit={handleSubmit}>
@@ -134,6 +165,7 @@ export default function ProductForm({ initialValues = emptyForm, onSubmit }) {
                 type="number"
                 name="inventory"
                 min="0"
+                step ="1"
                 value={form.inventory}
                 onChange={handleChange}
                 required
