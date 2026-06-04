@@ -34,6 +34,7 @@ BEGIN
 		FROM dbo.[Order] AS o
 		JOIN dbo.ShipMode AS s
 		ON o.ShipModeID = s.ShipModeID
+		WHERE OrderID = @OrderID;
 	END TRY
 	BEGIN CATCH
 		SELECT ERROR_MESSAGE() AS ErrorMessage;
